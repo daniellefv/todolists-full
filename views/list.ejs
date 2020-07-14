@@ -1,0 +1,85 @@
+<%- include("header") -%>
+
+
+<!-------------------------- ITEMS BOX --------------------------------->
+<div class="main-list">
+  <div>
+  <img src="/css/images/feather-home.png" />
+  <a href="/">Go to main list</a>
+  </div>
+</div>
+
+<div class="section-container">
+
+  <div id="heading">
+    <h1><%= listTitle.toUpperCase() %> </br>LIST</h1>
+  </div>
+
+
+  <div>
+
+<h2>List items</h2>
+<div class="box" data-spy="scroll" data-target="#navbar-example2" data-offset="0">
+
+  <% newListItems.forEach(function(item) { %>
+
+  <form action="/delete" method="post">
+    <div class="item">
+      <input name="checkbox" type="checkbox" value="<%= item._id %>" onChange="this.form.submit()"/>
+      <p><%= item.name %></p>
+    </div>
+    <input type="hidden" name="listName" value="<%= listTitle %>"> 
+  </form>
+  <% }); %>
+
+  <form class="item" action="/" method="post">
+    <input
+      type="text"
+      name="newItem"
+      placeholder="Insert new item"
+      autocomplete="off"
+    />
+    <button class="btn btn-light" type="submit" name="list" value="<%=listTitle%>">+</button>
+  </form>
+</div>
+</div>
+
+<!-------------------------- LISTS BOX --------------------------------->
+<div>
+<h2>Custom lists</h2>
+<div class="box" id="list-box" data-spy="scroll" data-target="#navbar-example2" data-offset="0">
+  <div class="heading-list" id="heading-list">
+    <form class="item" action="/newlist" method="post">
+      <input
+        class="input"
+        type="text"
+        name="newListName"
+        placeholder="Insert new list"
+        autocomplete="off"
+      />
+      <button class="btn btn-light" type="submit">+</button>
+    </form>
+  </div>
+
+
+    <% for (el of newListList) { %>
+
+      <form action="/deletelist" method="POST">
+        
+              <div class="item-list">
+              <p>
+                <a name="link" href="/<%=el.name%>"> <%= el.name %> </a>
+              </p>
+              <button class="btn btn-light" name="deletelist" value="<%= el.name %>" type="submit">-</button>
+              </div>
+              <input type="hidden" name="currentListName" value="<%= listTitle %>"> 
+      </form>
+    <% } %>
+  </div>
+
+</div>
+
+</div>
+
+
+<%- include("footer") -%>
